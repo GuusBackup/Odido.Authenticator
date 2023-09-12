@@ -1,8 +1,8 @@
 name: .NET 7 Build and Release
 
 on:
- workflow_dispatch 
-
+ - workflow_dispatch 
+ - push
 jobs:
   build:
     runs-on: windows-latest
@@ -20,12 +20,26 @@ jobs:
     - name: Build with dotnet
       run: dotnet publish --configuration Release --output out
 
-    # Assuming you're zipping the output for release; adjust if necessary.
- #   - name: Zip the output
-   #   run: zip -r Odido-authenticator.zip ./out/
+    - name: Log MD5 hashes of files in out
+      run: |
+        Get-ChildItem -Path out -Recurse | ForEach-Object {
+          $md5 = New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
+          $hash = [System.BitConverter]::ToString($md5.ComputeHash([System.IO.File]::ReadAllBytes($_.FullName)))
+          Write-Output "$($_.Name) - $hash"
 
+    # Assuming you're zipping the output for release; adjust if necessary.
+    - name: Zip contents of out using 7z
+      run: 7z a Odido-Authenticator.zip out\*
+
+      
     - name: Upload build artifact
       uses: actions/upload-artifact@v2
       with:
         name: Odido-Authenticator
         path: ./out
+  
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+       files: Odido-Authenticator.zip
