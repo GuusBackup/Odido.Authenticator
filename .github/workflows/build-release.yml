@@ -1,5 +1,6 @@
 name: .NET 7 Build and Release
-
+permissions:
+  contents: write
 on:
  - workflow_dispatch 
  - push
