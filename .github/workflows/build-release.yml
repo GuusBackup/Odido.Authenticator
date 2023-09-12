@@ -22,26 +22,10 @@ jobs:
 
     # Assuming you're zipping the output for release; adjust if necessary.
     - name: Zip the output
-      run: zip -r myapp.zip ./out/
+      run: zip -r Odido-authenticator.zip ./out/
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v2
       with:
-        tag_name: ${{ github.sha }}
-        release_name: Release ${{ github.sha }}
-        draft: true
-        prerelease: false
-
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./myapp.zip
-        asset_name: myapp.zip
-        asset_content_type: application/zip
+        name: myapp
+        path: ./Odido-authenticator.zip
