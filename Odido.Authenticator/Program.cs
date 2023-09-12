@@ -17,21 +17,28 @@ internal class Program
         Console.WriteLine("Refresh token (one time use): {0}", refreshToken);
 
         Console.WriteLine("Do you want to request a OAuth (Authentication token)? [Y/n]");
-
-        var answer = Console.ReadKey();
-
-        Console.WriteLine("Do you want to request a OAuth (Authentication token)? [Y/n]");
         if (IsYesResponse())
         {
             var oauthToken = await api.CreateOAuthToken(refreshToken);
             if (string.IsNullOrEmpty(oauthToken))
             {
                 Console.WriteLine("Something went wrong.. try again");
+                Console.ReadLine();
                 return;
             }
-            Console.WriteLine("OAuth token: {0}", oauthToken);
-            Console.WriteLine("WARNING! THIS IS A PASSWORD! KEEP THIS TOKEN SAFE.");
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("WARNING! THIS IS A PASSWORD! KEEP THIS TOKEN SAFE.\n");
+
+
+            Console.WriteLine("Authentication Token (OAuth): {0}\n", oauthToken);
         }
+        Console.WriteLine("Press key to exit.");
+
+        
+        Console.ReadLine();
     }
 
     private static bool IsYesResponse()
