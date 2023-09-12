@@ -9,7 +9,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+      with:
+        submodules: 'true'
+        
     - name: Setup .NET 7
       uses: actions/setup-dotnet@v1
       with:
