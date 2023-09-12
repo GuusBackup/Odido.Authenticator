@@ -21,11 +21,11 @@ jobs:
       run: dotnet publish --configuration Release --output out
 
     # Assuming you're zipping the output for release; adjust if necessary.
-    - name: Zip the output
-      run: zip -r Odido-authenticator.zip ./out/
+ #   - name: Zip the output
+   #   run: zip -r Odido-authenticator.zip ./out/
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v2
       with:
-        name: myapp
-        path: ./Odido-authenticator.zip
+        name: Odido-Authenticator
+        path: ./out
