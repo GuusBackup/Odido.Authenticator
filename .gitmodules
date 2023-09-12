@@ -1,0 +1,3 @@
+[submodule "TMobile.Api"]
+	path = TMobile.Api
+	url = https://github.com/GuusBackup/TMobile.Api.git
