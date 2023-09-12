@@ -26,8 +26,8 @@ jobs:
           $md5 = New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
           $hash = [System.BitConverter]::ToString($md5.ComputeHash([System.IO.File]::ReadAllBytes($_.FullName)))
           Write-Output "$($_.Name) - $hash"
+        } 
 
-    # Assuming you're zipping the output for release; adjust if necessary.
     - name: Zip contents of out using 7z
       run: 7z a Odido-Authenticator.zip out\*
 
